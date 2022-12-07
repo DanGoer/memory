@@ -2,35 +2,24 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
-
-const gameIcons = [
-  { icon: "🎂", number: 0, vis: false, permaVis: false },
-  { icon: "🎂", number: 0, vis: false, permaVis: false },
-  { icon: "🍫", number: 1, vis: false, permaVis: false },
-  { icon: "🍫", number: 1, vis: false, permaVis: false },
-  { icon: "🍭", number: 2, vis: false, permaVis: false },
-  { icon: "🍭", number: 2, vis: false, permaVis: false },
-  { icon: "🍼", number: 3, vis: false, permaVis: false },
-  { icon: "🍼", number: 3, vis: false, permaVis: false },
-  { icon: "🪔", number: 4, vis: false, permaVis: false },
-  { icon: "🪔", number: 4, vis: false, permaVis: false },
-  { icon: "🍺", number: 5, vis: false, permaVis: false },
-  { icon: "🍺", number: 5, vis: false, permaVis: false },
-  { icon: "🐱", number: 6, vis: false, permaVis: false },
-  { icon: "🐱", number: 6, vis: false, permaVis: false },
-  { icon: "🐶", number: 7, vis: false, permaVis: false },
-  { icon: "🐶", number: 7, vis: false, permaVis: false },
-];
+import { resetArray, getNewArray } from "../data/data";
 
 export default function Home() {
-  const [vis, setVis] = useState([]);
-  const [gameState, setGameState] = useState(gameIcons);
+  const [attempts, setAttempts] = useState(0);
+  const [gameState, setGameState] = useState(getNewArray());
+
+  const onReset = () => {
+    setGameState(resetArray());
+    setAttempts(0);
+  };
 
   const onReveal = (i: number) => {
     const newGameState = [...gameState];
     const visOne = newGameState.find((obj) => obj.vis === true);
     const visOneIndex = newGameState.findIndex((obj) => obj === visOne);
     console.log(visOne);
+    if (newGameState.filter((obj) => obj.vis === true).length > 1) return;
+    if (visOne) setAttempts((prv) => prv + 1);
     newGameState[i].vis = true;
 
     if (visOne?.number === newGameState[i].number) {
@@ -51,7 +40,7 @@ export default function Home() {
         clearGameState[visOneIndex].vis = false;
         setGameState(clearGameState);
         return;
-      }, 7000);
+      }, 1000);
     }
   };
 
@@ -75,6 +64,8 @@ export default function Home() {
             <div onClick={() => onReveal(i)}>o</div>
           );
         })}
+        <div>{attempts}</div>
+        <button onClick={onReset}>reset</button>
       </main>
 
       <footer className={styles.footer}>
