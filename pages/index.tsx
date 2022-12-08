@@ -54,18 +54,32 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        {gameState.map((icon, i) => {
-          return icon.permaVis ? (
-            <div key={icon.icon + i}>{icon.icon}</div>
-          ) : icon.vis ? (
-            <div key={icon.icon + i}>{icon.icon}</div>
-          ) : (
-            <div onClick={() => onReveal(i)}>o</div>
-          );
-        })}
-        <div>{attempts}</div>
-        <button onClick={onReset}>reset</button>
+      <main className={styles.main}>
+        <h1>Memory</h1>
+        <section className={styles.grid}>
+          {gameState.map((icon, i) => {
+            return (
+              <div
+                onClick={() => {
+                  if (icon.permaVis || icon.vis) return;
+                  onReveal(i);
+                }}
+                className={
+                  icon.vis ? `${styles.card} ${styles.flip}` : styles.card
+                }
+                key={icon.icon + i}
+              >
+                {icon.permaVis ? icon.icon : icon.vis ? icon.icon : "o"}
+              </div>
+            );
+          })}
+        </section>
+        <section className={styles.panel}>
+          <p>Attempts: {attempts}</p>
+          <button className={styles.button} onClick={onReset}>
+            reset
+          </button>
+        </section>
       </main>
 
       <footer className={styles.footer}>
