@@ -50,8 +50,8 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>Memory by DanGoer</title>
-        <meta name="description" content="Created by DanGoer" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="A memory game for fun" />
+        <link rel="icon" href="/D.svg" />
       </Head>
 
       <main className={styles.main}>
@@ -84,13 +84,13 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://www.dangoer.de/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
+          Created by
           <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            <Image src="/D.svg" alt="D Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
